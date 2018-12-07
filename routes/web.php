@@ -12,4 +12,11 @@ $res = $client->post($url,
      ['body' => json_encode($body)]
 );
 $data = json_decode($res->getBody());
-$token = $data->token;
+$jwtToken = $data->token;
+
+$urlFilm = 'http://35.240.210.144:5000/movies';
+$header = [ 'Authorization' => 'Bearer ' . $jwtToken ];
+$response = $client->get($urlFilm, array('headers' => $header));
+$movies = $response->getBody()->getContents();
+
+dd(json_decode($movies));
